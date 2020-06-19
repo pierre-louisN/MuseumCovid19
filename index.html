@@ -2,85 +2,51 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Musée Covid</title>
+        <link rel="icon" href="icon-museum.png" type="image/x-icon">
+        <title>Covid Museum</title>
     </head>
  
     <body>
-        <h1>Communication avec socket.io et Aws via le terminal</h1>
+        <h1>State your infos and load your files</h1>
 
-
-
-	<input type="file" id="fileToUpload" name="load" accept="image/png, image/jpeg, image/jpg">
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.dev.js"></script>
 	<script src="https://d3js.org/d3.v5.min.js"></script>
+	<script src="/script.js"></script>
+	
+	<p>
+	<label for="name">Name : </label>
+	<input type="text" name="name" id="name" value="John Doe" required>
+	</p>
+	<p>
+	<label for="country">Country : </label>
+	<select id="country" name="locality" required> <option value=''></option></select>
+	</p>
+	<p>
+	<label for="region">Region : </label>
+	<input type="text" name="region" id="region" value="Île-de-France" required>
+	</p>
+	<p>
+	<label for="sub-region">Sub-region : </label>
+	<input type="text" name="sub-region" id="sub-region" value="Seine-Saint-Denis" required>
+	</p>
+	<p> Period of the quarantine : </p>
+	<div class="radio-box">
+	<input type="radio" id="before" name="period" value="before" checked>
+	<label for="before">Before</label>
+	<input type="radio" id="during" name="period" value="during" >
+	<label for="during">During</label>
+	<input type="radio" id="after" name="period" value="after" >
+	<label for="after">After</label>
+	</div>
+	<p><input type="file" id="fileToUpload" name="load" accept="image/png, image/jpeg, image/jpg" ></p>
+	<p><input class="favorite styled" id="infos" type="button" value="Send infos and files"></p>
+	</div>
+
+	
 	
 	<p id="opResult"></p>
 	
-	<input class="favorite styled" type="button" value="See all results">
-
-        <script>
-		var socket = io.connect('http://localhost:8080');
-		
-		socket.on('afficheRes', function (data) {
-			// On récupère le pseudo de celui qui a cliqué dans les variables de session
-			console.log(' Réponse : recu ');
-			var table = "<table><tr><th>Labels</th><th>Confidence</th></tr>";
-			// show each face and build out estimated age table
-			for (var i = 0; i < data.Labels.length; i++) {
-				table += '<tr><td>' + data.Labels[i].Name +
-				'</td><td>' + data.Labels[i].Confidence + '</td></tr>';
-			}
-			table += "</table>";
-			document.getElementById("opResult").innerHTML = table;
-			console.log(JSON.stringify(data));
-			}); 
-		
-		        
-		document.getElementById("fileToUpload").addEventListener("change", function (event) {
-			ProcessImage();
-		}, false);
-	    
-		function ProcessImage() {
-			
-			var control = document.getElementById("fileToUpload");
-			var file = control.files[0];
-
-			// Load base64 encoded image 
-			var reader = new FileReader();
-			reader.onload = (function (theFile) {
-				return function (e) {
-					var img = document.createElement('img');
-					var image = null;
-					img.src = e.target.result;
-					var jpg = true;
-					try {
-						image = atob(e.target.result.split("data:image/jpeg;base64,")[1]);
-
-					} catch (e) {
-						jpg = false;
-					}
-					if (jpg == false) {
-						try {
-							image = atob(e.target.result.split("data:image/png;base64,")[1]);
-						} catch (e) {
-							alert("Not an image file Rekognition can process");
-							return;
-						}
-					}
-					//unencode image bytes for Rekognition DetectFaces API 
-					var length = image.length;
-					imageBytes = new ArrayBuffer(length);
-					var ua = new Uint8Array(imageBytes);
-					for (var i = 0; i < length; i++) {
-						ua[i] = image.charCodeAt(i);
-					}  
-					socket.emit('loadFile',imageBytes);
-				};
-			})(file);
-				reader.readAsDataURL(file);
-		}
-        //Call 
-        </script>
+	<input class="favorite styled" id="results" type="button" value="See all results">
     </body>
 </html>
