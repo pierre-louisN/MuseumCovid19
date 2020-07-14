@@ -2,51 +2,91 @@
 <html>
     <head>
         <meta charset="utf-8" />
+        <meta name="google-signin-client_id" content="161452087187-pqjgmjhf033vt8tcgjuh0fc287ljf413.apps.googleusercontent.com"/>
         <link rel="icon" href="icon-museum.png" type="image/x-icon">
+        <link rel="stylesheet" type="text/css" href="script.css">
+       <link rel="stylesheet" type="text/css" href="translate.css">
         <title>Covid Museum</title>
     </head>
  
     <body>
-        <h1>State your infos and load your files</h1>
-
-        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    
+	<div class="page">
+	<header tabindex="0">Covid Museum</header>
+	<div id="nav-container">
+	<div class="bg"></div>
+	<div class="button" tabindex="0">
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	</div>
+	<div id="nav-content" tabindex="0">
+	<ul>
+	<li><a class="link" id="linkHome" href="http://localhost:8080/index.html">Home</a></li>
+	<li><a class="link" id="linkMuseum" href="http://localhost:8080/museum.html">Museum</a></li>
+	<li><a class="link" id="linkMaps" href="http://localhost:8080/treemap.html">Treemaps</a></li>
+	<li><a class="link" href="http://localhost:8080/results.html">Other</a></li>
+	<li><a href="#0">Contact</a></li>
+	<li class="small"><a href="https://app.jogl.io/project/175" target="_blank">Official Website</a><a href="https://www.facebook.com/CovidMuseum/" target="_blank">Facebook</a></li>
+	</ul>
+	</div>
+	</div>
+	
+		
+		
+	<main>
+	<div class="content">
+		<dialog id="favDialog">
+		<p style="text-align:center;"> Choose your language</p>
+		<div id="google_translate_element"></div>
+		<menu style="text-align:center;">
+		<button id="confirmBtn" value="default">Confirm</button>
+		</menu>
+		
+	</dialog>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.dev.js"></script>
-	<script src="https://d3js.org/d3.v5.min.js"></script>
-	<script src="/script.js"></script>
+	<script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+	<script src="https://d3js.org/d3.v3.min.js"></script>
+	<script src="/index.js"></script>
+	<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	
-	<p>
-	<label for="name">Name : </label>
-	<input type="text" name="name" id="name" value="John Doe" required>
+	
+
+	<h1> Welcome to the Covid Museum </h1>
+
+	<p>	
+	For the first time it is possible to follow, understand, compare within each country the evolution of an emerging disease, the societal reactions it causes whether they are individual, political, medical, etc. through the digital material produced.
 	</p>
 	<p>
-	<label for="country">Country : </label>
-	<select id="country" name="locality" required> <option value=''></option></select>
+	You will participate in taking up this challenge through an experiment which consists in automatically detecting the objects present in a digitized drawing then in classifying them. The design you entrust to us is sent to an automatic shape detection service. There is no human intervention to spot the shapes. The technique used is that of artificial neural networks. It is a mechanism capable of learning from experience how to classify data, even when there are errors. The more we ask to recognize objects, the more efficient the system becomes.
 	</p>
 	<p>
-	<label for="region">Region : </label>
-	<input type="text" name="region" id="region" value="Île-de-France" required>
+	We will produce three classifications of the drawings. One before confinement, the other during confinement and finally a final one after confinement. Behavioral scientists will then be able to compare these classifications and consider that the symbolism of the drawings explains a posteriori the feelings of people during confinement.
 	</p>
-	<p>
-	<label for="sub-region">Sub-region : </label>
-	<input type="text" name="sub-region" id="sub-region" value="Seine-Saint-Denis" required>
-	</p>
-	<p> Period of the quarantine : </p>
-	<div class="radio-box">
-	<input type="radio" id="before" name="period" value="before" checked>
-	<label for="before">Before</label>
-	<input type="radio" id="during" name="period" value="during" >
-	<label for="during">During</label>
-	<input type="radio" id="after" name="period" value="after" >
-	<label for="after">After</label>
-	</div>
-	<p><input type="file" id="fileToUpload" name="load" accept="image/png, image/jpeg, image/jpg" ></p>
-	<p><input class="favorite styled" id="infos" type="button" value="Send infos and files"></p>
-	</div>
+	
+	<input id="changeLanguage" type="button" value="Change language">
+	
+	<p><div class="g-signin2" data-onsuccess="onSignIn"></div></p>
 
 	
+
+	<script type="text/javascript">
+	function googleTranslateElementInit() {
+	new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+	}
+	</script>
+	</div>
+	</main>
 	
-	<p id="opResult"></p>
-	
-	<input class="favorite styled" id="results" type="button" value="See all results">
+	</div>
+
     </body>
+    <div class="siteFooterBar">
+        <div class="contentFooter">
+            <img src="logoFondation.png" >
+                <div class="foot">Supported by USPN Fondation</div>
+        </div>
+    </div>
+   
 </html>

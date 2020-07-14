@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="icon-museum.png" type="image/x-icon">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="results.css">
+	<link rel="stylesheet" type="text/css" href="script.css">
+        <title>Covid Museum</title>
+    </head>
+ 
+    <body>
+        <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+	<script src="https://d3js.org/d3.v3.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.dev.js"></script>
+	<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+	<script src="/results.js"></script>
+    
+	<div class="page">
+	<header tabindex="0">Covid Museum</header>
+	<div id="nav-container">
+	<div class="bg"></div>
+	<div class="button" tabindex="0">
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	</div>
+	<div id="nav-content" tabindex="0">
+	<ul>
+	<li><a class="link" id="linkHome" href="http://localhost:8080/index.html">Home</a></li>
+	<li><a class="link" id="linkMuseum" href="http://localhost:8080/museum.html">Museum</a></li>
+	<li><a class="link" id="linkMaps" href="http://localhost:8080/treemap.html">Treemaps</a></li>
+	<li><a class="link" href="http://localhost:8080/results.html">Other</a></li>
+	<li><a href="#0">Contact</a></li>
+	<li class="small"><a href="https://app.jogl.io/project/175" target="_blank">Official Website</a><a href="https://www.facebook.com/CovidMuseum/" target="_blank">Facebook</a></li>
+	</ul>
+	</div>
+	</div>
+
+
+	<main>
+	<div class="content">
+	
+	<p>
+	<div class="radio-box">
+	<input type="radio" id="before" name="period" value="before" onclick="handleClick(this);" checked>
+	<label for="before">Before</label>
+	<input type="radio" id="during" name="period" value="during" onclick="handleClick(this);" >
+	<label for="during">During</label>
+	<input type="radio" id="after" name="period" value="after" onclick="handleClick(this);">
+	<label for="after">After</label>
+	</div>
+	<p>
+	<label for="nameLabel">Objects in this period: </label>
+	<select id="nameLabel" name="label" required> <option value=''></option></select>
+	</p>
+	
+	<p><input class="favorite styled" id="infos" type="button" value="Display the treemap"></p>
+	
+	
+	
+	<div class="conteneur">
+	<div id="chart"></div>
+	</div>
+	
+	<script>
+	//var period = "";
+	function handleClick(myRadio) {
+			//alert('Old value: ' + currentValue);
+			//alert('New value: ' + myRadio.value);
+			let dropdown = $('#nameLabel');
+			var period = myRadio.value;
+			var filePath = 'treemap'+period+'.json';
+			//console.log(filePath);
+			dropdown.empty();
+			dropdown.append('<option selected="true" disabled>Choose object name</option>');
+			dropdown.prop('selectedIndex', 0);
+			// Populate dropdown with name of Labels
+
+			$.getJSON(filePath, function (data) {
+				$.each(data, function (key, entry) {
+					dropdown.append($('<option></option>').attr('value', entry.key).text(entry.key));
+				})
+			});
+	}
+	</script>
+	
+	<div id="google_translate_element" style="display:none"></div>
+	</div>
+	</main>
+	</div>
+    	
+    </body>
+    <div class="siteFooterBar">
+        <div class="contentFooter">
+            <img src="logoFondation.png" >
+                <div class="foot">Supported by USPN Fondation</div>
+        </div>
+</html>

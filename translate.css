@@ -1,0 +1,25 @@
+#favDialog{
+	position : absolute;
+	margin : auto;
+	width: 20%;
+	height: 20%;
+}
+
+
+
+#google_translate_element {
+	position : relative;
+	margin : auto;
+	width: 30%;
+	height: 50%;
+}
+
+.goog-logo-link {
+   display:none !important;
+} 
+
+.goog-te-gadget{
+   color: transparent !important;
+}
+
+
